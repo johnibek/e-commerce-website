@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="card mb-3">
+                <div class="row g-0">
+
+                    <div class="col-md-4">
+                        {% if product.is_sale %}
+                            <div class="badge bg-primary text-white position-absolute" style="top: 0.5rem; left: 1rem; font-size: 18px">
+                                Sale
+                            </div>
+                        {% endif %}
+                            <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="..." style="height: 300px">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+
+                            {% if product.is_sale %}
+                                <div class="d-flex text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                        &nbsp;&nbsp;<b>Sale</b>&nbsp;&nbsp;
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                                <b>Price: &nbsp;</b><span class="text-muted text-decoration-line-through">&nbsp;${{ product.price }}&nbsp;&nbsp;</span>
+                                ${{ product.sale_price }}
+
+                            {% else %}
+                                <b>Price: ${{ product.price }}</b>
+                            {% endif %}
+
+                            <br><br>
+                            <div class="row">
+                                <div class="col-md-2 w-auto">Quantity:</div>
+                                <div class="col-md-2 w-auto">
+                                    <select class="form-select form-select-sm" aria-label="Default select example" id="qty_cart">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="3">4</option>
+                                        <option value="3">5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <br>
+                            <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+                            <button class="btn btn-warning" type="button" id="add_cart" value="{{ product.id }}">Add To Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <script>
+        // Check if button pressed
+        $(document).on('click', '#add_cart', function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'cart_add' %}',
+                data: {
+                    product_id: $('#add_cart').val(),
+                    product_qty: $('#qty_cart option:selected').text(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+
+                success: function(json){
+                    console.log(json)  // {quantity: 7}
+                    document.getElementById("cart_quantity").textContent = json.quantity
+                    location.reload()
+                },
+
+                error: function(xhr, errmsg, err){
+
+                }
+            });
+        })
+
+    </script>
+
+{% endblock %}

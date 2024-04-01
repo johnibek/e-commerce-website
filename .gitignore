@@ -1,0 +1,9 @@
+# Python files
+.idea/
+__pycache__/
+
+# database files
+db.sqlite3
+
+# virtual environment
+venv/

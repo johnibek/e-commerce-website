@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-dark py-1">
+        <div class="container px-5 px-lg-5 my-1">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Shipping Info</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Provide Shipping Info...</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <br>
+                <form action="{% url 'shipping_info' %}" method="POST">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <br>
+                    <button type="submit" class="btn btn-info">Submit</button>
+                    <br><br>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

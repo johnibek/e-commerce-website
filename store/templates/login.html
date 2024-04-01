@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        #register:hover{
+            color: green;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-dark py-1">
+        <div class="container px-5 px-lg-5 my-1">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">User Login</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Login To Your Account</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <br>
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <input class="form-control" type="text" name="username" placeholder="Enter Your Username">
+                    </div>
+
+                    <div class="mb-3">
+                        <input class="form-control" type="password" name="password" placeholder="Enter Your Password">
+                        <p style="font-family: 'Times New Roman'">If you do not have an account yet, Please <a href="{% url 'register' %}" id='register'>Sign Up</a></p>
+                    </div>
+
+                    <div class="mb-5">
+                        <input type="submit" name="Login" class="btn btn-primary">
+                    </div>
+                    <br><br><br><br><br><br><br><br><br><br><br><br>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

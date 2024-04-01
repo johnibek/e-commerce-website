@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-dark py-3">
+        <div class="container px-5 px-lg-5 my-2">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Category Summary</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Choose your category below...</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-8 offset-2">
+                <br>
+                {% for category in categories %}
+                    {{ forloop.counter }}.
+                    <a href={% url 'category' category|slugify %}>{{ category }}</a><br>
+                {% endfor %}
+                <br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}
